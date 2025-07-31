@@ -37,10 +37,18 @@ Route::prefix('/blog')->name('blog.')->group(function(){
         $post_modifier->title = 'Nouveau titre';
         $post_modifier->save(); // La methode delete permet de modifier un enregistrement
 
+        // Créer un nouvel article avec la methode create
+        $new_post = Post::create([
+            'title' => 'Mon nouveau titre test',
+            'slug' => 'nouveau-titre-test',
+            'content' => 'Deserunt incididunt culpa nulla esse fugiat aliqua. Elit in labore do enim dolore adipisicing est qui adipisicing exercitation laboris. Aute dolore culpa ut proident irure.'
+        ]);
+
         // dd($posts[1]);
         // dd($mypost);
         // dd($myposts);
-        dd($post_modifier);
+        // dd($post_modifier);
+        dd($new_post);
 
         return $post_modifier;
         
@@ -50,11 +58,11 @@ Route::prefix('/blog')->name('blog.')->group(function(){
     })->name('index');
 
     Route::get('/{slug}-{id}', function (string $slug, string $id, Request $request) {
-        return [
-            "slug" => $slug,
-            "id" => $id,
-            "name" => $request->input('name')
-        ];
+        $post = Post::findorFail($id);
+        if($post->slug != $slug){
+            return to_route('blog.show', ['slug' => $post->slug, 'id' => $post->id]);
+        }
+        return $post;
     })->where([
     'slug' => '[a-z0-9\-]+',
     'id' => '[0-9]+'
