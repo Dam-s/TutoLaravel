@@ -37,7 +37,7 @@ Route::prefix('/blog')->name('blog.')->controller(BlogController::class)->group(
         // $post_modifier->title = 'Nouveau titre';
         // $post_modifier->save(); // La methode delete permet de supprimer un enregistrement
 
-        // Créer un nouvel article avec la methode create (ajouter la propriété $fillable au model en incluant les champs modifiables )
+        // Créer un nouvel article avec la methode create (ajouter la propriété $fillable au model en incluant les champs modifiables  soit $guarded en spécifiant les champs qu'on ne peut modifier)
         // $new_post = Post::create([
         //     'title' => 'Mon nouveau titre test',
         //     'slug' => 'nouveau-titre-test',
