@@ -57,11 +57,16 @@ Route::prefix('/blog')->name('blog.')->controller(BlogController::class)->group(
         // ];
     )->name('index');
 
-    Route::get('/{slug}-{id}', 'show'
+    Route::get('/{slug}-{post}', 'show'
     )->where([
     'slug' => '[a-z0-9\-]+',
-    'id' => '[0-9]+'
+    'post' => '[0-9]+'
     ])->name('show');
+
+    // Route::get('/{post:slug}', 'show'
+    // )->where([
+    // 'post' => '[a-z0-9\-]+'
+    // ])->name('show');
 });
 
 

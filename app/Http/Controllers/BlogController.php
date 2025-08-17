@@ -20,16 +20,18 @@ class BlogController extends Controller
 
         // Les règles d'un même champ peuvent être definies sous forme de tableau ou en utilisant la classe Rule et ses methodes
         //les validations se font dans BlogFilterRequest
-        dd($request->validated());
+        // dd($request->validated());
         $posts = Post::paginate(1);
         return view('blog.index', ['posts'=> $posts]);
     }
-
-    public function show(string $slug, string $id)
+#
+    public function show($slug, Post $post)
     {
-        $post = Post::findorFail($id);
+        // dd($post);
+        // Remarque : En utilisant le paramètre de type Post on a plus besoin d'utiliser la methode findOrFail(Model binding). On peut aussi juste renvoyer le paramètre en tant que data .
+        // $post = Post::findorFail($post);
         if($post->slug != $slug){
-            return to_route('blog.show', ['slug' => $post->slug, 'id' => $post->id]);
+            return to_route('blog.show', ['slug' => $post->slug, 'post' => $post->id]);
         }
         return view('blog.show', ['post' => $post]) ;
     }
